@@ -1,0 +1,162 @@
+/* Styles go here */
+
+.uikeyboard button,
+.userbuttons button{
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  padding: 10px;
+  margin: 5px;
+  border-left: solid 1px black;
+  border-top: solid 1px black;
+  border-right: solid 2px #eee;
+  border-bottom: solid 2px #eee;
+}
+
+button.userButton {
+  font-size:16px;
+  font-weight:bold;
+  width:100px;
+}
+
+button.userButtonToMode {
+  font-size:16px;
+  font-weight:bold;
+  width:100px;
+  background-color:green;
+}
+
+button.userButtonFromMode {
+  font-size:16px;
+  font-weight:bold;
+  width:100px;
+  background-color:#f22;
+}
+
+.readout {
+  text-align: right;
+  font-size: 25px;
+  width: 280px;
+  margin-bottom: 10px;
+  border: solid 2px black;
+  padding: 10px;
+}
+
+.uikeyboard button.widebutton {
+  width: 100px;
+}
+
+button.fromAction {
+  font-size:12px;
+  background-color:#222;
+  color:white;
+  width:100px;
+}
+
+.fomActionEnabled {
+  font-size:12px;
+  background-color:#f33;
+  color:white;
+}
+
+button.toAction {
+  font-size:12px;
+  background-color:#222;
+  color:white;
+  width:100px;
+}
+
+.toActionEnabled {
+  font-size:12px;
+  background-color:#3f3;
+  color:white;
+}
+
+
+.playerbox {
+  margin: 10px;
+  cursor: hand;
+  cursor: pointer;
+}
+
+.playerbox:hover {
+  font-color: red;
+  border: solid 1px black;
+}
+
+div.selected {
+  color: white;
+  background-color: #222;
+}
+
+div.selected:hover {
+  cursor: not-allowed;
+}
+
+div.keyboardslot {
+  float:left;
+  width:350px;
+}
+
+div.userbuttons {
+  float:left;
+  width:180px;
+}
+
+div.actionButtons {
+  float:left;
+  width:130px;
+}
+
+div.userinfo {
+  float:left;
+  width:250px;
+  padding-left:50px;
+}
+
+div.actionButtons {
+  float:left;
+  width:130px;
+  padding-left:50px;
+}
+
+.playerScore {
+  font-weight:bold;
+  font-size:18px;
+  font-family:consolas;
+}
+
+.cents {
+  margin-bottom:-5px;
+  margin-top:5px;
+  font-size:50%;
+}
+
+.colorred {
+  color:red;
+}
+
+.colorblack {
+  color:black;
+}
+
+.playerName  {
+  color:blue;
+  font-wiehgt:bold;
+  font-size:24px;
+}
+
+.undoTxButton {
+  float:right;
+  width:100px;
+  height:30px;
+  background-color:#b22;
+  color:white;
+  font-weigth:bold;
+  font-style:italics;
+  font-size:12px;
+}
+
+
+
+

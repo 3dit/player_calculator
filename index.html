@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script lang='javascript'>console.clear()</script>
+  <script data-require="angular.js@1.5.5" data-semver="1.5.5" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script data-require="jquery@2.1.3" data-semver="2.1.3" src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script data-require="lodash.js@4.11.1" data-semver="4.11.1" src="https://cdn.jsdelivr.net/lodash/4.11.1/lodash.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script src="app.js"></script>
+  <script src="soundsService.js"></script>
+  <script src="calcService.js"></script>
+  <script src="keypad.js"></script>
+  <script src="pkAudio.js"></script>
+  <script src="tickets.js"></script>
+  <script src="txService.js"></script>
+  <script src="playerService.js"></script>
+  <script src="formatDirective.js"></script>
+  <script src="audioDirective.js"></script>
+</head>
+
+<body ng-app="app">
+  <div ng-controller="mainctrl">
+
+    <label>New Player Name:&nbsp;</label>
+    <input type='text' ng-model='newPlayerName' />
+    <button ng-click='addPlayer()'>Add Player</button>
+    <br/>
+    <br />
+
+    <div class='keyboardslot'>
+      <input type="text" ng-model="display" class="readout" />
+      <div keypad="" key-pressed="keyPressed(data)"></div>
+    </div>
+
+    <div class='userbuttons' style='margin-right:-55px;margin-left:-15px;'>
+      <button ng-click='toAction()' ng-class='getToActionClass()'>to</button>
+      <button ng-click='fromAction()' ng-class='getFromActionClass()'>from</button>
+    </div>
+    
+    <div class='userbuttons'>
+      <div ng-repeat='player in players'>
+        <div>
+          <button ng-click='selectPlayer(player)' class='{{getUserButtonClass()}}'>{{player.name}}</button> &nbsp;&nbsp;
+          <span class='playerScore'>{{player.totalAmount()}}</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class='userinfo'>
+      <div ng-if='selectedPlayer!=null'>
+        <span class='playerName'>{{selectedPlayer.name}}</span>
+        <button class='undoTxButton' ng-click='selectedPlayer.undoLastTx()'>Undo</button>
+        <div class='clearboth'></div>
+        <hr/>
+        <br/>
+        <div ng-repeat='tx in selectedPlayer.topTransactions() track by $index'>
+          <div style='font-family:consolas' formatnumber='formatnumber' tx='tx'>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style='clear:both;'></div>
+    
+    <div id='audioblock' audioblock='audioblock' audiolist='audiolist'></div>
+
+    <audio style="display: none;" pk-audio="sounds.sound1" controls="" src="http://afctools.azurewebsites.net/Scripts/small_click01.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.sound2" controls="" src="http://afctools.azurewebsites.net/Scripts/small_click01.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.sound3" controls="" src="http://afctools.azurewebsites.net/Scripts/small_click01.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.sound4" controls="" src="http://afctools.azurewebsites.net/Scripts/small_click01.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.bigsound1" controls="" src="http://afctools.azurewebsites.net/Scripts/large_clcik01.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.bigsound2" controls="" src="http://afctools.azurewebsites.net/Scripts/large_clcik01.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.givememoney" controls="" src="http://afctools.azurewebsites.net/Scripts/givememoney.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.cashregister1" controls="" src="http://afctools.azurewebsites.net/Scripts/cashregister.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.cashregister2" controls="" src="http://afctools.azurewebsites.net/Scripts/cashregister.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.beep1" controls="" src="http://afctools.azurewebsites.net/Scripts/beep.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.beep2" controls="" src="http://afctools.azurewebsites.net/Scripts/beep.wav"></audio>
+    <audio style="display: none;" pk-audio="sounds.beep3" controls="" src="http://afctools.azurewebsites.net/Scripts/beep.wav"></audio>
+  </div>
+
+</body>
+
+</html>
