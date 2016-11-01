@@ -44,7 +44,6 @@ angular.module('app')
         current = operate(mode, current, running);
         running = 0;
         mode = modes.none;
-        txService.tx(current);
         break;
         
       case "+/-":
