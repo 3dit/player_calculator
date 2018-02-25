@@ -17,5 +17,14 @@ This is a helpful utility to track transactions between players. It is meant to 
 
 * Written in Angular.js
 * Just practice early in my exposure to Angular.js
-* Not intended to be example of best practices - it was just done for fun and practice (plus, my kids hate contant counting play money)
+* Not intended to be example of best practices - it was just done for fun and practice (plus, my kids hate contantly counting play money)
+
+
+```  var modes = {
+    input: 0,
+    plus: 1,
+    minus: 2,
+    none: 3
+  };```
+  
 
