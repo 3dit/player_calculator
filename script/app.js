@@ -22,6 +22,7 @@ angular.module('app', [])
   $scope.restoreSession = function() {
     if(confirm('Do you want to replace the existing session with the initial session?')) 
       $scope.players = playerService.restoreInitialSession();
+      soundsService.giveMeMoneySound();
   }
   
   $scope.players = playerService.allPlayers();
