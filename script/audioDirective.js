@@ -20,6 +20,7 @@ angular.module('app')
   }
 
   return {
+    controller: function($scope) { console.log('ctrl', $scope, this); },
     restrict: 'A',
     scope: {
       audiolist: '=',

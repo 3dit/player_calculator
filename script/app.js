@@ -2,18 +2,26 @@ angular.module('app', [])
 
 //lodash
 .constant('_', window._)
-  .run(function($rootScope) {
+  .run(['$rootScope', function($rootScope) {
     $rootScope._ = window._;
-  })
+  }])
 
 .controller('mainctrl', function($scope, calcService, soundsService, playerService, _) {
 
   $scope.display = 0;
   $scope.clearOnNextKey = false;
   $scope.sounds = {};
+  
+  var DEVMODE = false;
 
   soundsService.setSounds($scope.sounds);
-  playerService.defaults();
+  
+  if(!DEVMODE && playerService.sessionExists()) {
+    if(confirm('do you want to rehydrate the existing session?')) playerService.fetchSession();
+  } else {
+    playerService.defaults(); 
+  }
+  
   $scope.players = playerService.allPlayers();
 
   $scope.selectedPlayer = null;
@@ -49,7 +57,7 @@ angular.module('app', [])
   $scope.keyPressed = function(keyData) {
     //secret deciaml 4x press to get 'give me money' sound
     if (keyData == 'Decimal') {
-      if($scope.sequentalSecretDecimalPresses>2) {
+      if($scope.sequentalSecretDecimalPresses > 2) {
       soundsService.giveMeMoneySound();
       $scope.sequentalSecretDecimalPresses = 0;
       calcService.doCalc('Clear');
@@ -105,6 +113,7 @@ angular.module('app', [])
   }
 
   $scope.toAction = function() {
+    $scope.display = calcService.doCalc('Equals');
     $scope.toMode = !$scope.toMode;
     $scope.fromMode = false;
     soundsService.bigButtonSound();
@@ -115,6 +124,7 @@ angular.module('app', [])
   }
 
   $scope.fromAction = function() {
+        $scope.display = calcService.doCalc('Equals');
     $scope.fromMode = !$scope.fromMode;
     $scope.toMode = false;
     soundsService.bigButtonSound();

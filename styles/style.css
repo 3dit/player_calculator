@@ -14,7 +14,7 @@
 }
 
 button.userButton {
-  font-size:14px;
+  font-size:16px;
   font-weight:bold;
   width:100px;
 }
@@ -23,7 +23,7 @@ button.userButtonToMode {
   font-size:16px;
   font-weight:bold;
   width:100px;
-  background-color:green;
+  background-color:#80ff99;
 }
 
 button.userButtonFromMode {
@@ -157,6 +157,18 @@ div.actionButtons {
   font-size:12px;
 }
 
+svg {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
 
 
 

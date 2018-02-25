@@ -12,9 +12,18 @@ angular.module('app')
     for (var index = 0; index < q.children.length; index++) {
       if (q.children[index].attributes && q.children[index].attributes.hasOwnProperty('bval')) {
         q.children[index].onclick = function(d) {
-          $scope.keyPressed({data : d.target.attributes.bval.value});
-          $scope.$apply();
-          unhilight(d.target);
+          if(!d.target.attributes.bval) {
+            var s = $(d.target).closest('svg');
+            if(s) {
+              var v = s.attr('bval');
+              $scope.keyPressed({data : v});
+              $scope.$apply();
+            }
+          } else {
+            $scope.keyPressed({data : d.target.attributes.bval.value});
+            $scope.$apply();
+            unhilight(d.target);
+          }
         }
       }
     }

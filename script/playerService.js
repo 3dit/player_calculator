@@ -6,11 +6,21 @@ angular.module('app')
   var idSeq = 0;
   var maxTransactionsDisplayed = 15;
 
-  var addPlayer = function(name, amount) {
+  function cachePlayers() {
+    var playerInfos = [];
+    _.each(players, function(player) {
+        playerInfo = { name:player.name, transactions:player.transactions, txamound: player.txamount };
+        playerInfos.push(playerInfo);
+    });
+    localStorage.transactionCalculatorSession = JSON.stringify(playerInfos);
+  }
+  
+  var addPlayer = function(name, amount, disableCache) {
     var txamount = 0;
     if(typeof amount == 'undefined') txamount = 5000;
     var newPlayer = new gamePlayer(name, txamount);
     players.push(newPlayer);
+    if(!disableCache) cachePlayers();
     return newPlayer;
   }
 
@@ -31,14 +41,16 @@ angular.module('app')
       var self = this;
       if (!self.transactions || self.transactions.length === 0) return;
       self.transactions = _.dropRight(self.transactions, 1);
+       cachePlayers();
     };
     vm.totalAmount = function() {
       var self = this;
-      return _.sum(self.transactions);
+      return _.sum(self.transactions); 
     };
-    vm.transactAmount = function(amount) {
+    vm.transactAmount = function(amount, disableCache) {
       var self = this;
       if (amount) self.transactions.push(amount);
+       if(!disableCache) cachePlayers();
     };
     vm.getTransactions = function() {
       var self = this;
@@ -49,7 +61,7 @@ angular.module('app')
       return _.takeRight(self.transactions, maxTransactionsDisplayed);
     }
     //now we can perform functions on ourself
-    if(txamount) vm.transactAmount(txamount);
+    if(txamount) vm.transactAmount(txamount, true);
 
     self.vm = vm;
     
@@ -62,19 +74,39 @@ angular.module('app')
     });
   }
 
-  var allPlayers = function() {
+  var allPlayers = function() {   
     return players;
   }
-  
+   
   var getTransactions = function() {
     
+  }
+  
+  function fetchSession() {
+    if(localStorage.transactionCalcualtorSession) {
+      var playerInfos = JSON.parse(localStorage.transactionCalculatorSession);
+      _.each(playerInfos, function(playerInfo) {
+        var transactions = playerInfo.transactions;  
+        var newPlayer = addPlayer(playerInfo.name, 0, true);
+        _.each(transactions, function(amount) { 
+            newPlayer.transactAmount(amount, true);
+        });  
+      });
+      return true;
+    }
+    return false;
+  }
+  
+  function sessionExists() {
+    if(localStorage.transactionCalcualtorSession) return true;
+    return false;
   }
 
   var defaults = function() {
     addPlayer('scott');
     addPlayer('gabe');
     addPlayer('michelle');
-    addPlayer('mathhew');
+    addPlayer('matthew');
     addPlayer('Community',0)
   }
 
@@ -83,7 +115,9 @@ angular.module('app')
     getPlayer: getPlayer,
     allPlayers: allPlayers,
     defaults: defaults,
-    getTransactions: getTransactions
+    getTransactions: getTransactions,
+    fetchSession: fetchSession,
+    sessionExists: sessionExists
   }
 
 });
