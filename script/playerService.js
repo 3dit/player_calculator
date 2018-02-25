@@ -6,6 +6,8 @@ angular.module('app')
   var idSeq = 0;
   var maxTransactionsDisplayed = 15;
 
+  var initialSession = localStorage.transactionCalculatorSession;
+
   function cachePlayers() {
     var playerInfos = [];
     _.each(players, function(player) {
@@ -61,7 +63,7 @@ angular.module('app')
       return _.takeRight(self.transactions, maxTransactionsDisplayed);
     }
     //now we can perform functions on ourself
-    if(txamount) vm.transactAmount(txamount, true);
+    if(txamount) vm.transactAmount(txamount);
 
     self.vm = vm;
     
@@ -82,14 +84,16 @@ angular.module('app')
     
   }
   
-  function fetchSession() {
-    if(localStorage.transactionCalcualtorSession) {
-      var playerInfos = JSON.parse(localStorage.transactionCalculatorSession);
+  function fetchSession(rawSessionString) {
+    players = [];
+    var sessionString = rawSessionString ? rawSessionString : localStorage.transactionCalcualtorSession;
+    if(sessionString) {
+      var playerInfos = JSON.parse(sessionString);
       _.each(playerInfos, function(playerInfo) {
         var transactions = playerInfo.transactions;  
-        var newPlayer = addPlayer(playerInfo.name, 0, true);
+        var newPlayer = addPlayer(playerInfo.name, 0);
         _.each(transactions, function(amount) { 
-            newPlayer.transactAmount(amount, true);
+            newPlayer.transactAmount(amount);
         });  
       });
       return true;
@@ -98,8 +102,14 @@ angular.module('app')
   }
   
   function sessionExists() {
-    if(localStorage.transactionCalcualtorSession) return true;
+    if(localStorage.transactionCalculatorSession) return true;
     return false;
+  }
+  
+  function restoreInitialSession() {
+    fetchSession(initialSession);
+    cachePlayers();
+    return players;
   }
 
   var defaults = function() {
@@ -117,7 +127,8 @@ angular.module('app')
     defaults: defaults,
     getTransactions: getTransactions,
     fetchSession: fetchSession,
-    sessionExists: sessionExists
+    sessionExists: sessionExists,
+    restoreInitialSession: restoreInitialSession
   }
 
 });

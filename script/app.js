@@ -12,14 +12,16 @@ angular.module('app', [])
   $scope.clearOnNextKey = false;
   $scope.sounds = {};
   
-  var DEVMODE = false;
-
   soundsService.setSounds($scope.sounds);
   
-  if(!DEVMODE && playerService.sessionExists()) {
-    if(confirm('do you want to rehydrate the existing session?')) playerService.fetchSession();
-  } else {
-    playerService.defaults(); 
+  
+  if(playerService.sessionExists()) $scope.hasSession = true;
+  
+  playerService.defaults(); 
+
+  $scope.restoreSession = function() {
+    if(confirm('Do you want to replace the existing session with the initial session?')) 
+      $scope.players = playerService.restoreInitialSession();
   }
   
   $scope.players = playerService.allPlayers();

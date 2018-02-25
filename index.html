@@ -21,11 +21,11 @@
   <div ng-controller="mainctrl">
 
     <label>New Player Name:&nbsp;</label>
-    <input type='text' ng-model='newPlayerName' />
+    <input type='text' ng-model='newPlayerName' /> 
     <button ng-click='addPlayer()'>Add Player</button>
     &nbsp;&nbsp;
-    <input id="resotresession" type="checkbox" value='false'/>
-    <label for="resoreSession">Restore Session on Reload</label>
+
+    <button ng-show="{{hasSession}}" ng-click="restoreSession()">Resore Session</button>
     <br/>
     <br />
 
