@@ -20,14 +20,4 @@ This is a helpful utility to track transactions between players. It is meant to 
 * Not intended to be example of best practices - it was just done for fun and practice (plus, my kids hate contantly counting play money)
 
 
-```  var modes = {
-    input: 0,
-    plus: 1,
-    minus: 2,
-    none: 3
-  };
-  
-
-  Test
-
 
