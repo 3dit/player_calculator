@@ -117,6 +117,15 @@ angular.module('app')
     return players;
   }
   
+  function deletePlayer(player) {
+    var index = 0;
+    for(index=0;index < players.length; index++) {
+      if(players[index].name == player.name) break;
+    }
+    players.splice(index, 1);
+    return players;
+  }
+  
   var defaults = function() {
     addPlayer('scott');
     addPlayer('gabe');
@@ -134,6 +143,7 @@ angular.module('app')
     fetchSession: fetchSession,
     sessionExists: sessionExists,
     restoreInitialSession: restoreInitialSession,
+    deletePlayer: deletePlayer
   }
 
 });

@@ -144,8 +144,11 @@ angular.module('app', [])
   }
   
   $scope.deleteSelectedPlayer = function(selectedPlayer) {
+    console.log('Selected', selectedPlayer)
     if(confirm('Do you REALLY want me to delete this player?')) {
-      alert('deleted');
+      if(confirm('REALLY DELETE PLAYER?')) {
+        $scope.players = playerService.deletePlayer(selectedPlayer);
+      }
     }  
   }
   
