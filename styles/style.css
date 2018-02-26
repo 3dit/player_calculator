@@ -33,6 +33,16 @@ button.userButtonFromMode {
   background-color:#f22;
 }
 
+.playerInfoBar {
+  display:flex;
+  justify-content:space-between;
+}
+
+.playerPrefPanel {
+  display:flex;
+  justify-content:space-between;
+}
+
 .readout {
   text-align: right;
   font-size: 25px;
@@ -142,7 +152,7 @@ div.actionButtons {
 
 .playerName  {
   color:blue;
-  font-wiehgt:bold;
+  font-weight:bold;
   font-size:24px;
 }
 
@@ -152,7 +162,7 @@ div.actionButtons {
   height:30px;
   background-color:#b22;
   color:white;
-  font-weigth:bold;
+  font-weight:bold;
   font-style:italics;
   font-size:12px;
 }

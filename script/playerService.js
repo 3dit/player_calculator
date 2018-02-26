@@ -1,10 +1,11 @@
 angular.module('app')
 
-.service('playerService', function(_) {
+.service('playerService', function(_, $q, $timeout) {
 
   var players = [];
   var idSeq = 0;
   var maxTransactionsDisplayed = 15;
+  var sessionStatusChangePromise = null;
 
   var initialSession = localStorage.transactionCalculatorSession;
 
@@ -15,6 +16,9 @@ angular.module('app')
         playerInfos.push(playerInfo);
     });
     localStorage.transactionCalculatorSession = JSON.stringify(playerInfos);
+    if(sessionStatusChangePromise) {
+      sessionStatusChangePromise.resolve(true);
+    }
   }
   
   var addPlayer = function(name, amount, disableCache) {
@@ -108,10 +112,11 @@ angular.module('app')
   
   function restoreInitialSession() {
     fetchSession(initialSession);
+    initialSession = null;
     cachePlayers();
     return players;
   }
-
+  
   var defaults = function() {
     addPlayer('scott');
     addPlayer('gabe');
@@ -128,7 +133,7 @@ angular.module('app')
     getTransactions: getTransactions,
     fetchSession: fetchSession,
     sessionExists: sessionExists,
-    restoreInitialSession: restoreInitialSession
+    restoreInitialSession: restoreInitialSession,
   }
 
 });

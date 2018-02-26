@@ -6,7 +6,7 @@ angular.module('app', [])
     $rootScope._ = window._;
   }])
 
-.controller('mainctrl', function($scope, calcService, soundsService, playerService, _) {
+.controller('mainctrl', function($scope, calcService, soundsService, playerService, _, $timeout, $q) {
 
   $scope.display = 0;
   $scope.clearOnNextKey = false;
@@ -15,13 +15,14 @@ angular.module('app', [])
   soundsService.setSounds($scope.sounds);
   
   
-  if(playerService.sessionExists()) $scope.hasSession = true;
+  if(playerService.sessionExists()) $scope.hasPreExistingSession = true;
   
   playerService.defaults(); 
 
   $scope.restoreSession = function() {
     if(confirm('Do you want to replace the existing session with the initial session?')) 
       $scope.players = playerService.restoreInitialSession();
+      $scope.hasPreExistingSession = false;
       soundsService.giveMeMoneySound();
   }
   
@@ -95,7 +96,7 @@ angular.module('app', [])
     }
     $scope.newPlayerName = '';
   }
-
+  
   $scope.selectPlayer = function(player) {
     $scope.selectedPlayer = player;
     $scope.clearOnNextKey = true;
@@ -105,6 +106,7 @@ angular.module('app', [])
       if ($scope.fromMode === true) amount = -$scope.display;
       if ($scope.toMode === true) amount = $scope.display;
       player.transactAmount(amount);
+      $scope.hasPreExistingSession= false;
     } else {
       soundsService.bigButtonSound();
     }
@@ -127,7 +129,7 @@ angular.module('app', [])
   }
 
   $scope.fromAction = function() {
-        $scope.display = calcService.doCalc('Equals');
+    $scope.display = calcService.doCalc('Equals');
     $scope.fromMode = !$scope.fromMode;
     $scope.toMode = false;
     soundsService.bigButtonSound();
@@ -137,6 +139,16 @@ angular.module('app', [])
     return $scope.fromMode === true ? 'userButtonFromMode userbuttons' : 'fromAction userbuttons';
   }
 
+  $scope.selectedUserPreferences = function() {
+    $scope.userPreferencesPanel = !$scope.userPreferencesPanel;
+  }
+  
+  $scope.deleteSelectedPlayer = function(selectedPlayer) {
+    if(confirm('Do you REALLY want me to delete this player?')) {
+      alert('deleted');
+    }  
+  }
+  
   $scope.getUserButtonClass = function(player) {
     if ($scope.fromMode) return 'userButtonFromMode';
     else if ($scope.toMode) return 'userButtonToMode';
